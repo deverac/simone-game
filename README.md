@@ -26,9 +26,9 @@ indefinitely (except for the last element in the note-sequence).
 |--------|-----------|
 | ?      | Show help text. |
 | 1      | Level 1. Repeat eight notes to win. |
-| 2      | Level 2. Repeat eight notes to win. |
-| 3      | Level 3. Repeat eight notes to win. |
-| 4      | Level 4. Repeat eight notes to win. |
+| 2      | Level 2. Repeat fourteen notes to win. |
+| 3      | Level 3. Repeat twenty notes to win. |
+| 4      | Level 4. Repeat thirty-one notes to win. |
 | B      | Blind mode. This is intended for playing on a phone. After pressing 'S', the screen will be replaced with large rectangular buttons on a black background and the game will begin. Notes will be played with no visual effects. With practice, the game can be played without looking at the phone. |
 | F      | Freeplay mode. Any number of notes can be played in any order. |
 | M      | Mute sounds. (In Blind mode, the Mute setting is ignored.) |
