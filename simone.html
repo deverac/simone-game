@@ -1,0 +1,952 @@
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width, height=device-height, initial-scale=1'>
+  <title>Simone</title>
+<style type='text/css'>
+@font-face {
+    font-family: 'Leds';
+    src: url(data:font/woff2;base64,d09GMgABAAAAAAUUAA8AAAAADaAAAAS6AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQ4/RkZUTRwaHgZgAIJCCAQRCAqLXIkICxwAATYCJAMiBCAFh1IHPBsnC0AuB2xjmNRHsRStRjsVHYuydDRul3d+ztjgeX4c/rlPA5mcBKQ5JTeorjmtqTptaUkKbfv/5/17PYF8gtb3RuT7guaCkzd4hTZPHpuMlXkeutqbvzf6eqfQKZxwN3iYxVkIU0/hhYBfusn5749z/2st7xye2BDPEqnwiOnvzPns/7gk8SRuoVlziWadRCV0opd4lRJZYGf25urCG0aAJwADQAAPe8Qu4PbSk1kAuL1tK4UwAOArVCRQQBGaL6HToPqJ4pl59WGw2F32/0N5D9UlHBQ70cXWntl+6udAmBzNDf7PSpMIjwEQgHzTcwBIFAZ0bMZCgw3FIgiIFSkRYBgCCirIqepfGACkBwEAEkCJ4xaVurXO4xsR/gEMzZNiBJDKfvB7ZaIB+UAeUAsAAAOyhANwFMsyLEfz4FoTHBNlnZfzWvJ5FiKJcl7FztPa4HVjRQAIigUHz4t9rJ/pTY7x7vNbOc86zDl+OHl1NfuIlKGeubnVo9f2l+SvMnPxvePtS3sXFlcPe73EtolF/oYuskDqvRxI6GmOXz3J5hP0G8McgGEf2FRjsEUo9kDkQk3yApEE/ZZlwObAfduIc/9V0UBMlvJgHpFxSzvh1i3aYY0R/clLT3hd3vDR0iMaGoraPT7VF269d5cH695X8CIljjtcm7C9Wp1SGXndLnoaEx5M0Av9s7zIwYH/ql2DWekled0TCY+iM9uIwPg7pRXGhDt45QZ0R0Bqq4/vu5gt3Omq+V3u5T2DiWffiCa3pUlPnf5pP53pONxg/trzNR3julsSn76Ld7prfv2M26Hhhg8M/lPDmm+IfzhJj9WuRW/fn+4Ltz67S0PlT2tNYYq51a2pKRcoUvumWaRNF3FNs6dK+hALNSM1CdurNSlVmW6mt697e3Q3tfdOj/Cc2eSLfK4DwFGY7PmqR8tPzRXXPaxE6ggARIAV4IxefmuQXw1hQPDfHLkzllL8VYJ+v+apVlpPekSWrXhmGibXFiIsAAC+CDiiDH4D49KcV9PoynLEyPQelJfWTg8DfgrFAHiDPIByFADgbx8KTJOHyCk8k6mp0CqnlpJDfgMJvXBaXnm72AlsMiCCtF4gOyB0isBkayq02qnVptlvwtDbTis4L17CScxHszRUhNg0JIyQGpcOlwwJs/mk+XEaaC8FCW0UEynICWvug9iY3M/OrRIMTWMVxCGkpmKGu5WHweaDa7qQwcpB6E/n0BBADBkOhq7CzaZQNrMlcS8N6fxgaJSMEJ+ABqpRpVpdyGNYqDvagTxZy5u5up02a9gYNEmBVYYGyO1pR4vz5kinGlXNuWwGl5qP1IVWGYYUWtr7bFEjCv6vabLE+OIUSR6GCuy9b0Y3rcbuw+/QSZWrnn3BD3+gm3NM3uaBv8SiHu5l78NeLqdOxtGba/hv5Tyfy0P3/rJmh8c+uAWfzSKwKAtQV01HhZ/ogv8Gy/332BdupGCHAigmUrOTxFxTKXhJuAIfUputwvfeamtQVdA77u21GxENyP4LgLJiuoWKz8UaWoWaGStFjaSBmNp1Hbl392SrCRWqQAgePBsYSTuzyM2qjWUrVfj/91af8ns7/G1CZMqSLUeuPPkKFAIAAA==)
+    format('woff2');
+}
+
+html, body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: lightgray;
+    overflow:hidden;
+}
+.small {
+    font-size: 10px;
+}
+.touch {
+    cursor: pointer;
+}
+svg {
+    border: 1px solid black;
+    width: 100%;
+    height: 100%;
+}
+#help {
+    display: none;
+    position: fixed;
+    left: 50%;
+    background-color: white;
+    border: 2px solid black;
+    transform: translateX(-50%);
+    width: 80%;
+    padding: 1em 1em 1em 1em;
+    margin-top: 1em;
+}
+#help > p {
+    text-indent: -20px;
+    margin-left: 20px;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+svg text {
+    pointer-events: none;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    stroke: none;
+}
+#replay {
+    display: none;
+}
+#visiboard text {
+    fill: black;
+}
+
+#blindboard text {
+    fill: gray;
+}
+#visiboard #countNum {
+    fill: red;
+    font-size: 16pt;
+    font-family: Leds;
+}
+</style>
+<script type='text/javascript'>
+"use strict";
+// This program is free software; you can distribute it and/or modify it under the
+// terms of the GNU General Public License version 2. (https://www.gnu.org/licenses/)
+
+// Primary four notes of bugle.
+const HZ = {
+    green:  391.995, // G4
+    red:    329.628, // E4
+    yellow: 261.626, // C4
+    blue:   195.998, // G3
+    lose:    42,
+};
+
+const WIN_HZ = {
+    green:  415,
+    red:    310,
+    yellow: 252,
+    blue:   209,
+};
+
+const DUR = {
+    win:  100,
+    lose: 1500,
+    base: 420,
+    repeat: 100,
+};
+
+const PAD = {
+    G: 'green',
+    R: 'red',
+    Y: 'yellow',
+    B: 'blue',
+};
+
+class Simone {
+
+    constructor(ui, sounder) {
+        this.ui = ui;
+        this.snd = sounder;
+
+        this.cnt = 1;
+        this.lastUserInput = 0;
+        this.latchVal = 0;
+        this.levelNum = 0;
+        this.loopDelay = 10;  // Arbitrary
+        this.prevColor = null;
+        this.repSeq = [];
+        this.stopI = 0;
+        this.userI = 0;
+        this.userTimeout = 3000;
+        this.winSeq = this._getWinningSeq();
+
+        this.isBlind = false;
+        this.isError = false;
+        this.isFreeplay = false;
+        this.isGameStarted = false;
+        this.isGameWon = false;
+        this.isHelp = false;
+        this.isArrowKeyDown = false;
+        this.isMute = false;
+        this.isPadDown = false;
+        this.isRotated = false;
+        this.isSimonePlaying = false;
+
+        this.mute(0);
+        this.blind(0);
+        this.level(0);
+        this.rotate();
+        this.ui.setCounterNum(0);
+    }
+
+    _getDelayMs() {
+        return 50;
+    }
+
+    _getDurationMs(stop, isWin) {
+        if (isWin) return DUR.win;
+
+        if (stop < 6) return DUR.base;
+        if (stop < 14) return DUR.base-100;
+        return DUR.base-200;
+    }
+
+    _getFrequency(color, isWin) {
+        switch(color) {
+            case PAD.B: return (isWin ? WIN_HZ.blue   : HZ.blue);
+            case PAD.Y: return (isWin ? WIN_HZ.yellow : HZ.yellow);
+            case PAD.R: return (isWin ? WIN_HZ.red    : HZ.red);
+            case PAD.G: return (isWin ? WIN_HZ.green  : HZ.green);
+            default: return 0;
+        }
+    }
+
+    _getInfoForColor(color, index, isWin) {
+        return {
+            color: color,
+            freq: this._getFrequency(color, isWin),
+            delay: this._getDelayMs()
+        };
+    }
+
+    _getInfosForColors(colors, isWin) {
+        var ary = [];
+        var prevColor = null;
+        var ttl = 0;
+        colors.forEach((color, i) => {
+            var inf = this._getInfoForColor(color, i, isWin);
+            if (i==0 && !isWin) {
+                inf.delay = 0;
+            }
+            ary.push(inf);
+            prevColor = color;
+        });
+        return ary;
+    }
+
+    _getNoteCountForLevel(n) {
+        switch (n) {
+            case 0: return 8;
+            case 1: return 14;
+            case 2: return 20;
+            case 3:
+            default: return 31;
+        }
+    }
+
+    _getRepeatSeq() {
+        var padColors = Object.values(PAD);
+        var aryLen = this._getNoteCountForLevel(this.levelNum);
+        var colors = Array(aryLen).fill(0).map(() => {
+            var n = parseInt(Math.random()*padColors.length, 10);
+            return padColors[n];
+        });
+        var isWin = false;
+        return this._getInfosForColors(colors, isWin);
+    }
+
+    _getWinningSeq() {
+        var seq = [PAD.R, PAD.Y, PAD.B, PAD.G];
+        var colors = [];
+        for (var i=0; i<3; i++) {
+            seq.forEach(color => {
+                colors.push(color);
+            });
+        }
+        var isWin = true;
+        return this._getInfosForColors(colors, isWin);
+    }
+
+    /**
+     * @param {boolean} [updateInput=false]
+     */
+    _inputLoop(updateInput) {
+        if (!this.isSimonePlaying) {
+            if (updateInput) {
+                this.lastUserInput = Date.now();
+            }
+
+            if (this.isGameWon || this.isFreeplay) {
+                return;
+            }
+
+            if (!this.isPadDown && (Date.now() - this.lastUserInput > this.userTimeout)) {
+                this._playError();
+                return;
+            }
+
+            setTimeout(() => {
+                this._inputLoop();
+            }, this.loopDelay);
+        }
+    }
+
+    _isPadMatchesSeq(id) {
+        if ((this.repSeq.length > 0) && (this.userI < this.repSeq.length)) {
+            return (id == this.repSeq[this.userI].color);
+        }
+        return false;
+    }
+
+    _isStopAtEnd() {
+        return this.stopI <= this.repSeq.length;
+    }
+
+    _isUserAtStop() {
+        return this.userI >= this.stopI;
+    }
+
+    _playError() {
+        if (!this.isError) {
+            this.isGameStarted = false;
+            this._setError(true);
+
+            if (!this.isFreeplay) {
+                this._setAllControls(true);
+            }
+
+            this._playSeq([{
+                delay: 100,
+                dur: DUR.lose,
+                freq: HZ.lose,
+                color: null,
+            }]);
+        }
+    }
+
+    /**
+     * @param {number} [dly1=0]
+     * @param {number} [dly2=0]
+     */
+    _playRepSeq(dly1, dly2) {
+        setTimeout(() => { this.ui.setCounterNum(this.stopI); }, dly1||0);
+        var ary = this.repSeq.slice(0, this.stopI);
+        var seq = this._setDurations(ary, this.stopI, false);
+        this._playSeq(seq, dly1+dly2);
+    }
+
+    /**
+     * @param {Array.<Object>} infs
+     * @param {number} [dly=0]
+     */
+    _playSeq(infs, dly) {
+        this.isSimonePlaying = true;
+
+        var ttl = dly||0;
+
+        this.isPadDown = false; // Cancel input in case user is holding down pad.
+
+        infs.forEach(inf => {
+            this.snd.startSimoneSound(ttl+inf.delay, inf.dur, inf.freq, this.ui, inf.color, this.isMute);
+            ttl += (inf.delay + inf.dur);
+        });
+
+        setTimeout(() => {
+            this.isSimonePlaying = false;
+            this._inputLoop(true);
+            if (this.isGameWon) {
+                this._setAllControls(true);
+                this.isGameStarted = false;
+            }
+        }, ttl);
+    }
+
+    _setDurations(ary, stop, isWin) {
+        var dur = this._getDurationMs(stop, isWin);
+        return ary.map(inf => { inf.dur=dur; return inf; });
+
+    }
+
+    _playWinSeq(dly) {
+        this.isGameWon = true;
+        setTimeout(() => { this.ui.setCounterBorder('rgb(0,200,0)'); }, dly);
+        var seq = this._setDurations(this.winSeq, this.stopI, true);
+        this._playSeq(seq, dly);
+    }
+
+    _setAllControls(b) {
+        this.ui.setStartVis(b);
+        this.ui.setLevelsVis(b);
+        this.ui.setReplayVis(b);
+    }
+
+    _setError(n) {
+        this.isError = !!n;
+        this.ui.setCounterBorder((this.isError ? 'red' : 'darkgray'));
+    }
+
+    arrowKeyDown(id) {
+        if (!this.isArrowKeyDown) {
+            this.isArrowKeyDown = true;
+            this.padDown(id);
+        }
+    }
+
+    arrowKeyUp() {
+        this.isArrowKeyDown = false;
+        this.padUp();
+    }
+
+    blind(b) {
+        this.isBlind = (typeof b === 'undefined') ? !this.isBlind : (b==1)
+        if (this.isBlind) {
+            this.isMute = false;
+            this.ui.setMuteBg(this.isMute);
+        }
+        this.ui.setBlindBg(this.isBlind);
+    }
+
+    freeplay() {
+        if (this.isError || !this.isGameStarted) {
+            this.isFreeplay = !this.isFreeplay;
+            this._setError(false);
+
+            this.ui.setStartVis(!this.isFreeplay);
+            this.ui.setLevelsVis(!this.isFreeplay);
+            this.ui.setReplayVis(false);
+
+            this.ui.setCounterNum(0);
+            this.ui.setFreeplayBg(this.isFreeplay);
+        }
+    }
+
+    help(b) {
+        this.isHelp = (typeof b === 'undefined') ? !this.isHelp : (b==1)
+        this.ui.setHelpBg(this.isHelp);
+        this.ui.setHelpVis(this.isHelp);
+    }
+
+    keyDown(evt) {
+        switch (evt.key) {
+            case '?': simone.help(); return;
+            case 'b': simone.blind(); return;
+            case 'f': simone.freeplay(); return;
+            case 'm': simone.mute(); return;
+            case 'r': simone.replay(); return;
+            case 's': simone.start(); return;
+            case 'x': simone.rotate(); return;
+            case '1': simone.level(0); return;
+            case '2': simone.level(1); return;
+            case '3': simone.level(2); return;
+            case '4': simone.level(3); return;
+            default: break;
+        }
+
+        switch (evt.keyCode) {
+            case 37: simone.arrowKeyDown(PAD.Y); return; // left
+            case 38: simone.arrowKeyDown(PAD.G); return; // up
+            case 39: simone.arrowKeyDown(PAD.R); return; // right
+            case 40: simone.arrowKeyDown(PAD.B); return; // down
+            default: break;
+        }
+    }
+
+    keyUp(evt) {
+        switch (evt.keyCode) {
+            case 37:  // left
+            case 38:  // up
+            case 39:  // right
+            case 40: simone.arrowKeyUp(); return; // down
+            default: break;
+        }
+    }
+
+    latch(n) {
+        if (!this.latchVal) {
+            this.latchVal = n;
+        } else if (n != this.latchVal) {
+            this.ui.setBlindBoard(false);
+        }
+    }
+
+    level(n) {
+        if (!this.isSimonePlaying) {
+            this.isGameStarted = false;
+            this.isGameWon = false;
+            this.userI = 0;
+            this.repSeq = [];
+            this._setError(false);
+            this.levelNum = n;
+            this.ui.setLevel(n);
+        }
+    }
+
+    mute(b) {
+        this.isMute = (typeof b === 'undefined') ? !this.isMute : (b==1)
+        if (this.isMute) {
+            this.isBlind = false;
+            this.ui.setBlindBg(this.isBlind);
+        }
+        this.ui.setMuteBg(this.isMute);
+    }
+
+    padDown(id) {
+        this.isPadDown = true;
+        this.latchVal = 0;
+        if ((!this.isSimonePlaying && !this.isGameWon && this.isGameStarted) || (this.isFreeplay)) {
+
+            var freq = this._getFrequency(id, false);
+            var dur = DUR.base;
+            var dly = (id == this.prevColor ? DUR.repeat : 0);
+
+            var isMatch = this._isPadMatchesSeq(id);
+
+            if (isMatch || this.isFreeplay) {
+                this.snd.startUserSound(this.cnt, dly, dur, freq, this.ui, id, this, this.isMute, this.isRotated);
+                this.prevColor = id;
+                this.cnt++;
+            }
+
+            if (this.isFreeplay) {
+                return;
+            } else if (isMatch) {
+                this.userI++;
+                if (this._isUserAtStop()) {
+                    this.stopI++;
+                    if (this._isStopAtEnd()) {
+                        this.userI = 0;
+                        this._playRepSeq(dly+dur, 500);
+                    } else {
+                        this.stopI--;
+                        this._playWinSeq(dly+dur+500);
+                    }
+                }
+            } else {
+                this._playError();
+            }
+        }
+    }
+
+    padUp() {
+        this.isPadDown = false;
+        this.lastUserInput = Date.now();
+    }
+
+    replay() {
+        this.latchVal = 0;
+        if (!this.isSimonePlaying && !this.isFreeplay) {
+            this.isGameStarted = true;
+            this.isGameWon = false;
+            this.userI = 0;
+            this._setError(false);
+            this._setAllControls(false);
+            this._playRepSeq();
+        }
+    }
+
+    /**
+     * @param {boolean} [b=false]
+     */
+    rotate(b) {
+        if (!this.isGameStarted) {
+            this.isRotated = ((typeof b === 'undefined') ? !this.isRotated : b);
+            this.ui.rotatePads(this.isRotated);
+        }
+    }
+
+    start() {
+        this.latchVal = 0;
+        if (!this.isSimonePlaying && !this.isFreeplay) {
+            this.repSeq = this._getRepeatSeq();
+            this.isGameWon = false
+            this.isGameStarted = true;
+            this._setError(false);
+            this._setAllControls(false);
+            this.userI = 0;
+            this.stopI = 1;
+            this.ui.setCounterBorder('darkgray');
+            this.ui.setBlindBoard(this.isBlind);
+            this._playRepSeq();
+        }
+    }
+
+}
+
+class UI {
+
+    // Note: CSS rules override programatically-created attributes.
+    constructor(doc) {
+        this.doc = doc;
+        this.padIds = Object.values(PAD);
+        this._createBlindBoard();
+        this._addMouseListeners();
+        this._addShadows();
+    }
+
+    rotatePads(b) {
+        var elem = this._getId('pads');
+        if (elem) {
+            this._removeShadows();
+            if (b) {
+                elem.setAttribute('transform', 'rotate(45 105 105)');
+            } else {
+                elem.removeAttribute('transform');
+            }
+            this._addShadows(b);
+        }
+    }
+
+    _addMouseListeners() {
+        this.padIds.forEach(id => {
+            this._getId(id).setAttribute('onmousedown', 'simone.padDown("'+id+'")');
+            this._getId(id).setAttribute('onmouseup', 'simone.padUp()');
+            this._getId(id).setAttribute('onmouseleave', 'simone.padUp()');
+        });
+        this.padIds.forEach(id => {
+            var blindId = 'blind'+id;
+            this._getId(blindId).setAttribute('onmousedown', 'simone.padDown("'+id+'")');
+            this._getId(blindId).setAttribute('onmouseup', 'simone.padUp()');
+            this._getId(blindId).setAttribute('onmouseleave', 'simone.padUp()');
+        });
+    }
+
+    _removeShadows() {
+        this.padIds.forEach(id => {
+            var shadElem = this._getId(this._getShadowId(id));
+            if (shadElem) {
+                shadElem.parentElement.removeChild(shadElem);
+            }
+        });
+    }
+
+    /**
+     * @param {boolean} [isRot=false]
+     */
+    _addShadows(isRot) {
+        this.padIds.forEach(id => {
+            var e = this._getId(id);
+            var path = this._createSvgElement('path');
+            path.setAttribute('id', this._getShadowId(id));
+            path.setAttribute('d', e.getAttribute('d'));
+            var transXY = (isRot ? '2 2' : '0 3');
+            path.setAttribute('transform', 'translate('+transXY+')');
+            path.setAttribute('fill', 'black');
+            path.setAttribute('stroke', 'black');
+            path.setAttribute('stroke-width', '1');
+            e.parentNode.insertBefore(path, e);
+        });
+    }
+
+    _baseCircle(cx, cy, r, onClk) {
+        var cir = this._createSvgElement('circle');
+        cir.setAttribute('cx', cx);
+        cir.setAttribute('cy', cy);
+        cir.setAttribute('r', r);
+        cir.setAttribute('class', 'touch');
+        cir.setAttribute('stroke', 'gray');
+        cir.setAttribute('fill', 'black');
+        cir.setAttribute('onclick', onClk);
+        return cir;
+    }
+
+    _baseRect(id, width2, height4, x, y, onClk, str) {
+        var r = this._createSvgElement('rect');
+        if (id) {
+            r.setAttribute('id', 'blind'+id);
+        }
+        r.setAttribute('class', 'touch');
+        r.setAttribute('width', width2);
+        r.setAttribute('height', height4);
+        r.setAttribute('stroke', 'gray');
+        r.setAttribute('fill', 'black');
+        r.setAttribute('x', x);
+        r.setAttribute('y', y);
+        r.setAttribute('rx', 4);
+        r.setAttribute('ry', 4);
+        if (onClk) {
+            r.setAttribute('onclick', onClk);
+        }
+        if (str) {
+            var txt = this._createSvgElement('text');
+            txt.setAttribute('x', x+width2/2);
+            txt.setAttribute('y', y+height4/2);
+            txt.appendChild(this.doc.createTextNode(str));
+            var g = this._createSvgElement('g');
+            g.appendChild(r);
+            g.appendChild(txt);
+            return g;
+        }
+        return r;
+    }
+
+    _createBlindBoard() {
+        var brd = this._getId('blindboard');
+        var width = window.innerWidth;
+        var height = window.innerHeight;
+        brd.setAttribute('viewBox', '0 0 '+width+' '+height);
+
+        var bg = this._createSvgElement('rect');
+        bg.setAttribute('width', width);
+        bg.setAttribute('height', height);
+        bg.setAttribute('fill', 'black');
+        brd.appendChild(bg);
+
+        var height4 = height/4;
+        var width2 = width/2
+        var p = 4;
+        this.padIds.forEach((id, i) => {
+            var x;
+            var y;
+            switch(i) {
+                case 0: x=p; y=p; break;
+                case 1: x=width2+p; y=p; break;
+                case 2: x=p; y=height4+p; break;
+                case 3:
+                default: x=width2+p; y=height4+p; break;
+            }
+            var rect = this._baseRect(id, width2-p-p, height4-p-p, x, y, null, null);
+            brd.appendChild(rect);
+        });
+
+        var yval = (height4 * 3);
+
+        brd.appendChild(this._baseRect(null, width2-p-p, height4-p-p, p, yval+p, 'simone.start()', 'S'));
+        brd.appendChild(this._baseRect(null, width2-p-p, height4-p-p, width2+p, yval+p, 'simone.replay()', 'R'));
+
+
+        var radius = height4/4;
+        var cir0 = this._baseCircle(width2/2,height4*2.5, radius, 'simone.latch(1)');
+        brd.appendChild(cir0);
+        var cir1 = this._baseCircle(width2*1.5,height4*2.5, radius, 'simone.latch(2)');
+        brd.appendChild(cir1);
+
+        var txt = this._createSvgElement('text');
+        txt.setAttribute('x', width2);
+        txt.setAttribute('y', height4*2.1); //  2.1 works well enough.
+        txt.appendChild(this.doc.createTextNode('Touch both circles to exit.'));
+        brd.appendChild(txt);
+    }
+
+    _createSvgElement(name) {
+        return this.doc.createElementNS('http://www.w3.org/2000/svg', name);
+    }
+
+    _fill(id, colr) {
+        var ele = this._getId(id);
+        if (ele) {
+            ele.setAttribute('fill', colr);
+        }
+    }
+
+    _getBg(b) { return (b ? 'lightblue' : 'white'); }
+
+    _getColor(id, n) {
+        switch(id) {
+            case PAD.B: return (n ?  'url(#blueGrad)' : 'darkblue');
+            case PAD.G: return (n ?  'url(#greenGrad)' : 'darkgreen');
+            case PAD.R: return (n ?  'url(#redGrad)' : 'darkred');
+            case PAD.Y: return (n ?  'url(#yellowGrad)' : 'rgba(234,186,0)');
+            default: return 'pink';
+        }
+    }
+
+    _getId(id) { return this.doc.getElementById(id); }
+    _getShadowId(id) { return id+'shadow'; }
+    _setVis(id, b) { this._getId(id).style.display = (b ? 'inline' : 'none'); }
+
+    moveDown(id, isRot) {
+        var mvXY = (isRot ? '2 2' : '0 3');
+        this._getId(id).setAttribute('transform', 'translate('+mvXY+')');
+        this._getId(this._getShadowId(id)).setAttribute('display', 'none');
+    }
+
+    moveUp(id) {
+        this._getId(id).removeAttribute('transform');
+        this._getId(this._getShadowId(id)).removeAttribute('display');
+    }
+
+    setBlindBoard(b) {
+        this._getId('blindboard').style.display = (b ? 'inline' : 'none');
+        this._getId('visiboard').style.display = (b ? 'none' : 'inline');
+    }
+
+    setBlindBg(b) { this._fill('blindCir', this._getBg(b)); }
+    setCounterBorder(colr) { this._getId('countBox').setAttribute('stroke', colr); }
+    setCounterVis(b) { this._setVis('counter', b); }
+    setCounterNum(val) { this._getId('countNum').textContent=''+val; }
+    setFreeplayBg(b) { this._fill('freeplayCir', this._getBg(b)) }
+    setHelpBg(b) { this._fill('helpCir', this._getBg(b)); }
+    setHelpVis(b) { this._setVis('help', b); }
+
+    setLevel(n) {
+        for (var i=0; i<5; i++) {
+            this._fill('lev'+i, this._getBg(i==n));
+        }
+    }
+
+    setLevelsVis(b) { this._setVis('levels', b); }
+    setMuteBg(b) { this._fill('muteCir', this._getBg(b)) }
+    setPadBg(id, n) { this._fill(id, this._getColor(id, n)); }
+    setReplayVis(b) { this._setVis('replay', b); }
+    setStartVis(b) { this._setVis('start', b); }
+}
+
+
+class Sounder {
+
+    constructor(audioCtx) {
+        this.audioCtx = audioCtx;
+
+        this.sndLoopDelay = 10; // Arbitrary
+        this.count = null;
+        this.oscillator = null;
+        this.ui = null;
+        this.color = null;
+    }
+
+    startSimoneSound(dly, dur, freq, ui, color, isMute) {
+        var oscillator = this.audioCtx.createOscillator();;
+        oscillator.type = 'square';
+        oscillator.frequency.value = (isMute ? 0 : freq);
+        oscillator.connect(this.audioCtx.destination);
+
+        setTimeout(() => {
+            oscillator.start();
+            ui.setPadBg(color, 1);
+        }, dly);
+
+        setTimeout(() => {
+            oscillator.stop();
+            ui.setPadBg(color, 0);
+        }, dly+dur);
+    }
+
+    startUserSound(cnt, dly, dur, freq, ui, color, smn, isMute, isRot) {
+        this.count = cnt;
+
+        if (this.oscillator) {
+            this.oscillator.stop();
+        }
+        if (this.ui) {
+            this.ui.setPadBg(this.color, 0);
+            this.ui.moveUp(this.color);
+        }
+
+        this.ui = ui;
+        this.color = color;
+
+        this.oscillator = this.audioCtx.createOscillator();
+        this.oscillator.type = 'square';
+        this.oscillator.frequency.value = (isMute ? 0 : freq);
+        this.oscillator.connect(this.audioCtx.destination);
+
+        setTimeout(() => {
+            this.oscillator.start();
+            ui.setPadBg(color, 1);
+            ui.moveDown(color, isRot);
+        }, dly);
+
+        setTimeout(() => {
+            this.stopUserSound(cnt, ui, color, smn, isMute);
+        }, dly+dur);
+    }
+
+    stopUserSound(cnt, ui, color, smn, isMute) {
+        if (this.count == cnt) {
+            if (smn.isPadDown) {
+                setTimeout(() => {
+                    this.stopUserSound(cnt, ui, color, smn, isMute);
+                }, this.sndLoopDelay);
+            } else {
+                ui.setPadBg(color, 0);
+                ui.moveUp(color);
+                this.oscillator.stop();
+                this.oscillator = null;
+            }
+        }
+    }
+
+}
+
+
+function init() {
+    var ui = new UI(document);
+    var sounder = new Sounder(new AudioContext());
+    var simone = new Simone(ui, sounder);
+
+    // Add 'simone' to window namespace and prevent closure minifier from renaming.
+    window['simone'] = simone;
+}
+
+window['init'] = init; // Prevents closure minifier from renaming.
+
+</script>
+</head>
+<body onload='init()' onkeydown='simone.keyDown(event)' onkeyup='simone.keyUp(event)'>
+
+<div id='help' onclick='simone.help(0)'>
+    <p><b>?</b>: Show this help text. Touch the help to dismiss it.</p>
+    <p><b>1,2,3,4</b>: Level.
+        <b>1</b> = Repeat eight notes to win.
+        <b>2</b> = Repeat fourteen notes to win.
+        <b>3</b> = Repeat twenty notes to win.
+        <b>4</b> = Repeat thirty-one notes to win.
+    </p>
+    <p><b>B</b>: Blind mode (for playing on a phone). After pressing
+       'S', the screen will be replaced with large rectangular buttons on a black
+       background and the game will begin. Notes will be played with no visual effects.
+    </p>
+    <p><b>F</b>: Freeplay. Press buttons at will.</p>
+    <p><b>M</b>: Mute the sound.</p>
+    <p><b>R</b>: Replay the previous sequence.</p>
+    <p><b>S</b>: Start the game.</p>
+    <div style='font-size: x-small'>
+      This program is free software; you can distribute it and/or modify it under
+      the terms of the <a href='https://www.gnu.org/licenses/'>GNU General Public License</a> version 2.
+      <a href='https://www.waitingforfriday.com/?p=586'>Reverse Engineering a Simon Game</a> was used as a reference.
+      The Simon game, created by Milton Bradley, was the inspiration for this program.
+      <a href='https://fontlibrary.org/en/font/segment7'>Segment7</a> is the LED font.
+    </div>
+</div>
+
+<svg id='blindboard' viewBox='-10 -10 230 230' xmlns='http://www.w3.org/2000/svg' display='none'>
+</svg>
+
+<svg id='visiboard' viewBox='-10 -10 230 230' xmlns='http://www.w3.org/2000/svg'>
+
+    <g fill='white' stroke='black' stroke-width='1'>
+
+        <circle cx='105' cy='106' r='113' fill='dimgray' stroke-width='1' />
+
+        <g id='levels'>
+            <circle id='lev0' class='touch' cx='75' cy='80' r='6' onclick='simone.level(0)' />
+            <text class='small' x='75' y='81'>1</text>
+
+            <circle id='lev1' class='touch' cx='95' cy='80' r='6' onclick='simone.level(1)' />
+            <text class='small' x='95' y='81' >2</text>
+
+            <circle id='lev2' class='touch' cx='115' cy='80' r='6' onclick='simone.level(2)' />
+            <text class='small' x='115' y='81'>3</text>
+
+            <circle id='lev3' class='touch' cx='135' cy='80' r='6' onclick='simone.level(3)' />
+            <text class='small' x='135' y='81'>4</text>
+        </g>
+
+        <g id='start'>
+            <circle class='touch' cx='78' cy='131' r='10' fill='lightgreen' onclick='simone.start()' />
+            <text x='78' y='132' class='small'>S</text>
+        </g>
+
+        <g id='counter'>
+            <rect id='countBox' x='90' y='93' width='30' height='30' rx='2' ry='2' stroke-width='2' fill='black' />
+            <text id='countNum' class='small' x='105' y='112' stroke='red'></text>
+        </g>
+
+        <g id='replay'>
+            <circle class='touch' cx='132' cy='131' r='10' fill='yellow' onclick='simone.replay()' />
+            <text x='132' y='132' class='small'>R</text>
+        </g>
+
+        <g id='pads'>
+            <path id='green' class='touch' d='M100,50 v-50 a100,100 0 0,0 -100,100 h 50 a50,50 0 0,1 50,-50 z' fill='darkgreen' />
+            <path id='red' class='touch' d='M110,50 v-50 a100,100 0 0,1 100,100 h -50 a50,50 0 0,0 -50,-50 z' fill='darkred' />
+            <path id='yellow' class='touch' d='M50,110 h -50 a100,100 0 0,0 100,100 v-50 a50,50 0 0,1 -50,-50 z' fill='rgb(224,186,0)' />
+            <path id='blue' class='touch' d='M160,110 h 50 a100,100 0 0,1 -100,100 v-50 a50,50 0 0,0 50,-50 z' fill='darkblue' />
+        </g>
+
+        <g id='mute'>
+            <circle id='muteCir' class='touch' cx='10' cy='10' r='10' onclick='simone.mute()' />
+            <text class='small' x='10' y='11'>M</text>
+        </g>
+
+        <g id='blind'>
+            <circle id='blindCir' class='touch' cx='200' cy='10' r='10' onclick='simone.blind()' />
+            <text class='small' x='200' y='11' fill='black'>B</text>
+        </g>
+
+        <g>
+            <circle id='helpCir' class='touch' cx='10' cy='200' r='10' onclick='simone.help()' />
+            <text x='10' y='201' class='small'>?</text>
+        </g>
+
+        <g>
+            <circle id='freeplayCir' class='touch' cx='200' cy='200' r='10' onclick='simone.freeplay()' />
+            <text class='small' x='200' y='201' fill='black'>F</text>
+        </g>
+
+    </g>
+
+    <radialGradient id='redGrad' cx='50%' cy='50%' r='50%' fx='50%' fy='50%'>
+        <stop offset='0%' stop-color='rgb(250, 160, 160)' />
+        <stop offset='100%' stop-color='darkred' />
+    </radialGradient>
+
+    <radialGradient id='blueGrad' cx='50%' cy='50%' r='50%' fx='50%' fy='50%'>
+        <stop offset='0%' stop-color='lightblue' />
+        <stop offset='100%' stop-color='darkblue' />
+    </radialGradient>
+
+    <radialGradient id='yellowGrad' cx='50%' cy='50%' r='50%' fx='50%' fy='50%'>
+        <stop offset='0%' stop-color='rgb(255,255,170)' />
+        <stop offset='100%' stop-color='rgb(224,186,0)' />
+    </radialGradient>
+
+    <radialGradient id='greenGrad' cx='50%' cy='50%' r='50%' fx='50%' fy='50%'>
+        <stop offset='0%' stop-color='lightgreen' />
+        <stop offset='100%' stop-color='darkgreen' />
+    </radialGradient>
+</svg>
+
+</body>
+</html>
