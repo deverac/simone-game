@@ -3,6 +3,8 @@
 This program is very similar to the Simon(TM) game by Milton Bradley that was
 created in 1978.
 
+`Simone` can be [played here](https://deverac.github.io/simone-game/simone.min.html).
+
 Playing `Simone` is identical to playing Simon. Open `simone.html` (or
 `simone.min.html`) in your browser and press the start (S) button. A note will
 play, and light its corresponding pad. Press the pad that was lit. Two notes
